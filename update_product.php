@@ -35,7 +35,7 @@
         //Create images folder
         if (!is_dir('images'))
             mkdir('images');
-        //Insert Data into DB
+        //Update Data into DB
         if (empty($errors)){
             #Test if image uploaded
             $image = $_FILES["image"] ?? null;
@@ -46,7 +46,7 @@
                 $imagePath = "images/".$image['name'];
                 move_uploaded_file($image["tmp_name"], $imagePath);
             }
-            #Add Data to DB
+            #Update Data into DB
             $statement = $pdo -> prepare(  "UPDATE products
                                             SET image = :image, title = :title, description = :description, price = :price
                                             WHERE id = :id" );
