@@ -3,13 +3,13 @@
     //Connect to DataBase
     $pdo = new PDO('mysql:host=localhost; port=3306; dbname=crud 1', 'root', '');
     $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //Get The ID of the element
+    //Acquire ID from GET request
     $id = $_GET['id'] ?? null;
     if (!$id){
         header("Location: index.php");
         exit;   
     }
-    //Select from DataBase
+    //Select Data from DB
     $statement = $pdo -> prepare("  SELECT * 
                                     FROM products
                                     WHERE id = :id   ");
@@ -21,7 +21,7 @@
     $title = $product["title"];
     $description = $product["description"];
     $price = $product["price"];
-    //Acquire and insert data to DB
+    //Acquire from POST Request & Insert Data to DB
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
         //Acquire Data from POST request
         $title = $_POST['title'];
@@ -37,7 +37,7 @@
             mkdir('images');
         //Insert Data into DB
         if (empty($errors)){
-            //Test if image uploaded
+            #Test if image uploaded
             $image = $_FILES["image"] ?? null;
             $imagePath = $product['image'];
             if ($image && $image['tmp_name']){
@@ -46,19 +46,19 @@
                 $imagePath = "images/".$image['name'];
                 move_uploaded_file($image["tmp_name"], $imagePath);
             }
-            //Insert Data into DB
+            #Add Data to DB
             $statement = $pdo -> prepare(  "UPDATE products
                                             SET image = :image, title = :title, description = :description, price = :price
                                             WHERE id = :id" );
-            //Bind Values
+            #Bind Values
             $statement -> bindValue(':image', $imagePath);
             $statement -> bindValue(':title', $title);
             $statement -> bindValue(':description', $description);
             $statement -> bindValue(':price', $price);
             $statement -> bindValue(':id', $id);
-            //Execute Insertion
+            #Execute Insertion
             $statement -> execute();
-            //Redirect to first Page
+            #Redirect to first Page
             header("Location: index.php");
         }
     } 
@@ -71,11 +71,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $product['title'] ?></title>
-    <!--CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 </head>
 
 <body style="padding:30px 50px">
+    <h1 style="font-weight:bold">Update : <?php echo $product['title'] ?></h1>
     <!--Form Validation-->
     <?php if (!empty($errors)) : ?>
         <div class="alert alert-danger">
@@ -84,7 +84,6 @@
             <?php endforeach; ?>    
         </div>
     <?php endif; ?>
-    <h1 style="font-weight:bold">Update : <?php echo $product['title'] ?></h1>
     <!--Go Back Button-->
     <a href="index.php" type="button" class="btn btn-secondary" style="margin:30px 0px 10px">Go back to Products</a>
     <!--Form-->

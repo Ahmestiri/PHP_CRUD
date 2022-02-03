@@ -1,29 +1,28 @@
-    <!--PHP-->
 <?php
     //Connect to DataBase
     $pdo = new PDO('mysql:host=localhost; port=3306; dbname=crud 1', 'root', '');
     $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //Search
+    //Acquire Search from GET request
     $search = $_GET['search'] ?? "" ;
-    //Select from DataBase
+    //Select Data from DB
     if ($search){
-        //Read Data from DB
+        #Read Data from DB
         $statement = $pdo -> prepare("  SELECT * 
                                         FROM products
                                         WHERE title LIKE :title
                                         ORDER BY create_date DESC   ");
-        //Bind Values
+        #Bind Values
         $statement -> bindValue(':title', "%$search%");
-                                        
     }
     else{
-        //Read Data from DB
+        #Read Data from DB
         $statement = $pdo -> prepare("  SELECT * 
                                         FROM products
                                         ORDER BY create_date DESC   ");
     }
     //Execute Reading
     $statement -> execute();
+    //Fetch statement into associative array
     $products = $statement->fetchAll(PDO::FETCH_ASSOC);
 ?> 
 
@@ -34,7 +33,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Products CRUD</title>
-    <!--CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 </head>
 
@@ -49,8 +47,9 @@
             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
         </div>
     </form>
-    
+    <!--Products Table-->
     <table class="table">
+        <!--Table Header-->
         <thead>
             <tr>
             <th scope="col">#</th>
@@ -61,12 +60,12 @@
             <th scope="col">Action</th>
             </tr>
         </thead>
+        <!--Table Body-->
         <tbody>
-            <!--PHP-->
             <?php foreach ($products as $i => $product) : ?>
                 <tr>
                     <th style = "line-height:50px" scope="row"><?php echo $i+1 ?></th>
-                    <td><img style = "width:50px"  src="<?php echo $product['image'] ?>"</td>
+                    <td><img style = "width:50px" src="<?php echo $product['image'] ?>"></td>
                     <td style = "line-height:50px"><?php echo $product['title'] ?></td>
                     <td style = "line-height:50px"><?php echo $product['price'] ?></td>
                     <td style = "line-height:50px"><?php echo $product['create_date'] ?></td>
@@ -81,7 +80,6 @@
                     </td>
                 </tr>
             <?php endforeach; ?>
-
         </tbody>
     </table>    
 </body>

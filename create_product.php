@@ -1,4 +1,3 @@
-<!--PHP-->
 <?php
     //Connect to DataBase
     $pdo = new PDO('mysql:host=localhost; port=3306; dbname=crud 1', 'root', '');
@@ -8,7 +7,7 @@
     $title = "";
     $description = "";
     $price ="";
-    //Acquire and insert data to DB
+    //Acquire from POST Request & Insert Data to DB
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
         //Acquire Data from POST request
         $title = $_POST['title'];
@@ -25,25 +24,25 @@
             mkdir('images');
         //Insert Data into DB
         if (empty($errors)){
-            //Test if image uploaded
+            #Test if image uploaded
             $image = $_FILES["image"] ?? null;
             $imagePath = '';
             if ($image){
                 $imagePath = "images/".$image['name'];
                 move_uploaded_file($image["tmp_name"], $imagePath);
             }
-            //Insert Data into DB
+            #Add Data to DB
             $statement = $pdo -> prepare("  INSERT INTO products (image, title, description, price, create_date) 
                                             VALUES (:image, :title, :description, :price, :date)    ");
-            //Bind Values
+            #Bind Values
             $statement -> bindValue(':image', $imagePath);
             $statement -> bindValue(':title', $title);
             $statement -> bindValue(':description', $description);
             $statement -> bindValue(':price', $price);
             $statement -> bindValue(':date', $date);
-            //Execute Insertion
+            #Execute Insertion
             $statement -> execute();
-            //Redirect to first Page
+            #Redirect to first Page
             header("Location: index.php");
         }
     } 
@@ -56,7 +55,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create Product</title>
-    <!--CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 </head>
 
