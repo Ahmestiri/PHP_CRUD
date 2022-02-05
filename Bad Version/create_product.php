@@ -57,7 +57,6 @@
     <title>Create Product</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 </head>
-
 <body style="padding:30px 50px">
     <h1 style="font-weight:bold">Create Product</h1>
     <!--Form Validation-->
