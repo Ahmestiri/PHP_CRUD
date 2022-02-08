@@ -1,0 +1,15 @@
+{
+    "name": "user/php",
+    "authors": [
+        {
+            "name": "Ahmestiri",
+            "email": "96390728+Ahmestiri@users.noreply.github.com"
+        }
+    ],
+    "require": {},
+    "autoload":{
+        "psr-4":{
+            "app\\": "./"
+        }
+    }
+}
