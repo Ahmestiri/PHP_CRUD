@@ -1,6 +1,6 @@
 <?php
     //Connect to DataBase
-    $pdo = new PDO('mysql:host=localhost; port=3306; dbname=crud 1', 'root', '');
+    $pdo = new PDO('mysql:host=localhost; port=3306; dbname=php_crud', 'root', '');
     $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Acquire ID from GET request
     $id = $_GET['id'] ?? null;
