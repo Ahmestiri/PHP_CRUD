@@ -99,7 +99,7 @@
         </div>
         <div class="mb-3">
             <label>Product Description</label>
-            <textarea type="text" class="form-control" name="description" value = "<?php echo $description?>"></textarea>
+            <textarea type="text" class="form-control" name="description"><?php echo $description?></textarea>
         </div>
         <div class="mb-3">
             <label>Product Price in DT</label>
